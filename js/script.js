@@ -17,6 +17,7 @@ const quotes = [
     source: "Tyler Durden - Brad Pitt",
     citation: "Fight Club",
     year: 1999,
+    tags: ["movie", "motivation", "action"],
   },
   {
     quote:
@@ -24,12 +25,14 @@ const quotes = [
     source: "Sean Parker - Justin Timberlake",
     citation: "The Social Network",
     year: 2010,
+    tags: ["movie", "social", "entrepreneurship"],
   },
   {
     quote: "If you’re good at something, never do it for free.",
     source: "The Joker - Heath Ledger",
     citation: "The Dark Knight",
     year: 2008,
+    tags: ["movie", "wise", "comics"],
   },
   {
     quote:
@@ -37,6 +40,7 @@ const quotes = [
     source: "Brené Brown",
     citation: "Rising Strong",
     year: 2015,
+    tags: ["book", "inspirational"],
   },
   {
     quote:
@@ -44,6 +48,7 @@ const quotes = [
     source: "Paulo Coelho",
     citation: "The Alchemist",
     year: 1988,
+    tags: ["book", "motivation"],
   },
 ];
 
@@ -74,11 +79,42 @@ const printQuote = () => {
   if (randomQuote.year) {
     htmlStr += `<span class="year"> ${randomQuote.year} </span>`;
   }
+  // Concatinate to the html string if there is tags
+  if (randomQuote.tags) {
+    htmlStr += "| Tags: ";
+    for (let i = 0; i < randomQuote.tags.length; i++) {
+      let tag = randomQuote.tags[i];
+      if (randomQuote.tags.indexOf(tag) == 0) {
+        htmlStr += `<span> #${tag} </span>`;
+      } else {
+        htmlStr += `<span class="tags"> #${tag} </span>`;
+      }
+    }
+  }
   // here we finish the string bu adding the end p tag to html string
   htmlStr += "</p>";
+  // call the changeColorBG function in order to change the color of background.
+  changeColorBG();
+
   // get the quote-bo id to store html string using the innerHTML method
   return (document.getElementById("quote-box").innerHTML = htmlStr);
 };
+
+const changeColorBG = () => {
+  // create variables to store the random nums to get a color
+  let x = Math.floor(Math.random() * 256);
+  let y = Math.floor(Math.random() * 256);
+  let z = Math.floor(Math.random() * 256);
+  // then create another varible to put all of it together to get a rgb color
+  let bgColor = `rgb(${x}, ${y}, ${z})`;
+  // console.log(bgColor);
+
+  // the line of code above will change the background color to that random color as soon as this function is called
+  document.body.style.background = bgColor;
+};
+
+// This setInterval function allows you to call a function at a time (3000 milliseconds)
+setInterval(printQuote, 15000);
 
 /***
  * click event listener for the print quote button
